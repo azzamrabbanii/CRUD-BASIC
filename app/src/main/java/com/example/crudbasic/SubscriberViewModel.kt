@@ -36,25 +36,25 @@ class SubscriberViewModel(private val repository: SubscriberRepository) : ViewMo
     }
 
     fun insert(subscriber: Subscriber) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             repository.insert(subscriber)
         }
     }
 
     fun delete(subscriber: Subscriber) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             repository.delete(subscriber)
         }
     }
 
     fun update(subscriber: Subscriber) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             repository.update(subscriber)
         }
     }
 
     fun clearAll() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             repository.deleteAll()
         }
     }
