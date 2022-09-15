@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.crudbasic.adapter.MyRecyclerViewAdapter
 import com.example.crudbasic.databinding.ActivityMainBinding
+import com.example.crudbasic.db.Subscriber
 import com.example.crudbasic.db.SubscriberDataBase
 import com.example.crudbasic.repository.SubscriberRepository
 
@@ -44,9 +45,15 @@ class MainActivity : AppCompatActivity() {
     private fun displaySubscriberList() {
         subscriberViewModel.subscribers.observe(this, Observer {
             Log.i("Tag", "displaySubscriberList: $it")
-            binding.subscriberRecyclerView.adapter = MyRecyclerViewAdapter(it)
+            binding.subscriberRecyclerView.adapter = MyRecyclerViewAdapter(it) { selectedItem: Subscriber ->
+                listItemClicked(selectedItem)
+            }
 
         })
+    }
+
+    private fun listItemClicked(subscriber: Subscriber){
+        subscriberViewModel.initUpdateAndDelete(subscriber)
     }
 
 }

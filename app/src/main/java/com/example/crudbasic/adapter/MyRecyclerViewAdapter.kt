@@ -8,27 +8,35 @@ import com.example.crudbasic.R
 import com.example.crudbasic.databinding.ItemListBinding
 import com.example.crudbasic.db.Subscriber
 
-class MyRecyclerViewAdapter(private val subscriberList: List<Subscriber>) : RecyclerView.Adapter<MyViewHolder>() {
+class MyRecyclerViewAdapter(
+
+    private val subscriberList: List<Subscriber>,
+    private val clickListener: (Subscriber) -> Unit
+
+    ) : RecyclerView.Adapter<MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
 
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding : ItemListBinding =
+        val binding: ItemListBinding =
             DataBindingUtil.inflate(layoutInflater, R.layout.item_list, parent, false)
         return MyViewHolder(binding)
 
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.bind(subscriberList[position])
+        holder.bind(subscriberList[position], clickListener)
     }
 
     override fun getItemCount(): Int = subscriberList.size
 }
 
-class MyViewHolder (val binding: ItemListBinding) : RecyclerView.ViewHolder(binding.root){
-    fun bind(subscriber: Subscriber){
+class MyViewHolder(val binding: ItemListBinding) : RecyclerView.ViewHolder(binding.root) {
+    fun bind(subscriber: Subscriber, clickListener: (Subscriber) -> Unit) {
         binding.nameTextView.text = subscriber.name
         binding.emailTextView.text = subscriber.email
+        binding.listItemLayout.setOnClickListener {
+            clickListener(subscriber)
+        }
     }
 }
